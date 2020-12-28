@@ -1,0 +1,11 @@
+{
+  "name": "mungtube",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {},
+  "author": "vvsos1",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
