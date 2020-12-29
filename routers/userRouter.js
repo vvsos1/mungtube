@@ -1,9 +1,9 @@
 import express from 'express';
+import routes from '../routes';
 
 const userRouter = express.Router();
 
-userRouter.get('/',(req,res) => res.send('user home'));
-userRouter.get('/edit',(req,res) => res.send('user edit'));
-userRouter.get('/changePassword',(req,res) => res.send('user changePassword'));
-
+userRouter.get(routes.userDetail,(req,res) => res.send('userDetail'));
+userRouter.get(routes.editProfile,(req,res) => res.send('editProfile'));
+userRouter.get(routes.editPassword,(req,res) => res.send('editPassword'));
 export default userRouter;
