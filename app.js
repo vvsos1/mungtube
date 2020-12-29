@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
+import { userRouter } from './router';
 
 const app = express();
 
@@ -20,5 +21,7 @@ app.get('/', (req, res) => {
 app.get('/profile', (req, res) => {
     res.send(`Hello from profile`)
 });
+
+app.use('/user',userRouter);
 
 export default app;
