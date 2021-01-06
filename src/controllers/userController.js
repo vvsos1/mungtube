@@ -9,7 +9,7 @@ export const postLogin = (req, res) => {
 }
 
 export const logout = (req, res) => {
-    res.render("logout", { pageTitle: "Logout" });
+    res.redirect(routes.home);
 };
 export const getJoin = (req, res) => {
     res.render("join", { pageTitle: "Join" });
