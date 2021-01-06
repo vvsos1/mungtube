@@ -21,20 +21,26 @@ const EDIT_VIDEO = "/:id/edit";
 const DELETE_VIDEO = "/:id/delete";
 
 const routes = {
-  home: HOME,
-  join: JOIN,
-  login: LOGIN,
-  logout: LOGOUT,
-  search: SEARCH,
-  users: USERS,
-  userDetail: USER_DETAIL,
-  editProfile: EDIT_PROFILE,
-  editPassword: EDIT_PASSWORD,
-  videos: VIDEOS,
-  upload: UPLOAD,
-  videoDetail: VIDEO_DETAIL,
-  editVideo: EDIT_VIDEO,
-  deleteVideo: DELETE_VIDEO,
+    home: HOME,
+    join: JOIN,
+    login: LOGIN,
+    logout: LOGOUT,
+    search: SEARCH,
+    users: USERS,
+    userDetail: (id) => {
+        if (id) return `${USERS}${USER_DETAIL.replace(":id", id)}`;
+        else return USER_DETAIL;
+    },
+    editProfile: EDIT_PROFILE,
+    editPassword: EDIT_PASSWORD,
+    videos: VIDEOS,
+    upload: UPLOAD,
+    videoDetail: (id) => {
+        if (id) return `${VIDEOS}${VIDEO_DETAIL.replace(":id", id)}`;
+        else return VIDEO_DETAIL;
+    },
+    editVideo: EDIT_VIDEO,
+    deleteVideo: DELETE_VIDEO,
 };
 
 export default routes;
