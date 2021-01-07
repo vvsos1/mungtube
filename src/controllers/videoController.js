@@ -1,11 +1,11 @@
 import routes from "../routes";
 
 export const home = (req, res) => {
-  res.render("home", { pageTitle: "Home" ,videos});
+  res.render("home", { pageTitle: "Home" ,videos:[]});
 };
 export const search = (req, res) => {
   const { term: searchingFor } = req.query;
-  res.render("search", { pageTitle: "Search", searchingFor, videos });
+  res.render("search", { pageTitle: "Search", searchingFor,videos:[] });
 };
 export const getUpload = (req, res) => {
   res.render("upload", { pageTitle: "Upload" });

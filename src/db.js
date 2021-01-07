@@ -1,7 +1,11 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config();
+
+const {MONGO_URL} = process.env;
 
 mongoose.connect(
-  "mongodb://localhost:27017/mungtube",
+  MONGO_URL,
   {
     useNewUrlParser:true,
     useFindAndModify:false

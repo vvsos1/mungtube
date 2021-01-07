@@ -1,7 +1,9 @@
 import './db';
 import app from "./app";
+import dotenv from "dotenv";
+dotenv.config();
 
-const PORT = 80;
+const {PORT = 80} = process.env;
 
 function handleListening() {
     console.log(`Server Running On http://localhost:${PORT}`);
