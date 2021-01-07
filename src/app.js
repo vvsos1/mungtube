@@ -18,6 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 app.set('views',__dirname+"/views")
 app.set("view engine", "pug");
+app.use('/uploads',express.static("uploads"));
 app.use(localsMiddleware);
 
 app.use(function(req, res, next) {
