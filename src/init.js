@@ -1,8 +1,9 @@
 import './db';
-import app from "./app";
 import dotenv from "dotenv";
+import app from "./app";
 import './models/Video';
 import './models/Comment';
+
 dotenv.config();
 
 const {PORT = 80} = process.env;
