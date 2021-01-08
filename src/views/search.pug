@@ -5,5 +5,9 @@ block content
     .search__header
         h3 Searching For #{searchingFor}
     .search__videos
-        each video in videos
-            +videoBlock(video)
+        if videos.length === 0
+            h5 No Videos Found
+        else
+            each video in videos
+                +videoBlock(video)
+            
