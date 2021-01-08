@@ -43,7 +43,10 @@ const routes = {
         if (id) return `${VIDEOS}${EDIT_VIDEO.replace(":id", id)}`;
         else return EDIT_VIDEO;
     },
-    deleteVideo: DELETE_VIDEO,
+    deleteVideo: id => {
+        if (id) return `${VIDEOS}${DELETE_VIDEO.replace(":id", id)}`;
+        else return DELETE_VIDEO;
+    },
 };
 
 export default routes;
