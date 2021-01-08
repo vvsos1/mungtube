@@ -27,7 +27,7 @@ const routes = {
     logout: LOGOUT,
     search: SEARCH,
     users: USERS,
-    userDetail: (id) => {
+    userDetail: id => {
         if (id) return `${USERS}${USER_DETAIL.replace(":id", id)}`;
         else return USER_DETAIL;
     },
@@ -35,11 +35,14 @@ const routes = {
     editPassword: EDIT_PASSWORD,
     videos: VIDEOS,
     upload: UPLOAD,
-    videoDetail: (id) => {
+    videoDetail: id => {
         if (id) return `${VIDEOS}${VIDEO_DETAIL.replace(":id", id)}`;
         else return VIDEO_DETAIL;
     },
-    editVideo: EDIT_VIDEO,
+    editVideo: id => {
+        if (id) return `${VIDEOS}${EDIT_VIDEO.replace(":id", id)}`;
+        else return EDIT_VIDEO;
+    },
     deleteVideo: DELETE_VIDEO,
 };
 
