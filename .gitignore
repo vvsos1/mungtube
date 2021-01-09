@@ -121,3 +121,7 @@ uploads
 
 .eslintrc.js
 .prettierrc.json
+
+static
+
+.vscode
