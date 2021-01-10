@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "dev:server": "nodemon --exec babel-node src/init.js --delay 2",
-    "dev:assets": "cross-env WEBPACK_ENV=development webpack -w",
+    "dev:assets": "cross-env WEBPACK_ENV=production webpack -w",
     "build:assets": "cross-env WEBPACK_ENV=production webpack"
   },
   "author": "vvsos1",
