@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import path from "path";
 import passport from "passport";
+import session from "express-session";
 import { localsMiddleware } from "./middlewares";
 import userRouter from "./routers/userRouter";
 import globalRouter from "./routers/globalRouter";
@@ -19,6 +20,13 @@ app.use(helmet());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(
+  session({
+    secret: process.env.COOKIE_SECRET,
+    resave: true,
+    saveUninitialized: false,
+  })
+);
 app.use(morgan("dev"));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
