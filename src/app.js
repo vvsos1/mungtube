@@ -4,11 +4,14 @@ import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 import path from "path";
+import passport from "passport";
 import { localsMiddleware } from "./middlewares";
 import userRouter from "./routers/userRouter";
 import globalRouter from "./routers/globalRouter";
 import videoRouter from "./routers/videoRouter";
 import routes from "./routes";
+
+import "./passport";
 
 const app = express();
 
@@ -21,6 +24,9 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 app.use("/uploads", express.static("uploads"));
 app.use("/static", express.static("static"));
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(localsMiddleware);
 
 app.use((req, res, next) => {
