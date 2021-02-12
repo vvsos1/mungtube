@@ -5,6 +5,7 @@ import {
   getLogin,
   githubLogin,
   logout,
+  myProfile,
   postGithubLogin,
   postJoin,
   postLogin,
@@ -24,6 +25,8 @@ globalRouter.get(routes.login, onlyPublic, getLogin);
 globalRouter.post(routes.login, onlyPublic, postLogin);
 
 globalRouter.get(routes.logout, onlyPrivate, logout);
+
+globalRouter.get(routes.myProfile, myProfile);
 
 globalRouter.get(routes.search, search);
 

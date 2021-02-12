@@ -3,6 +3,7 @@ const HOME = "/";
 const JOIN = "/join";
 const LOGIN = "/login";
 const LOGOUT = "/logout";
+const MY_PROFILE = "/me";
 const SEARCH = "/search";
 
 // Users
@@ -30,6 +31,7 @@ const routes = {
   join: JOIN,
   login: LOGIN,
   logout: LOGOUT,
+  myProfile: MY_PROFILE,
   search: SEARCH,
   users: USERS,
   userDetail: (id) => {
