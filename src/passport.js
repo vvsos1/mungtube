@@ -24,9 +24,9 @@ passport.use(
     {
       clientID: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-      callbackURL: `https://witty-earwig-26.loca.lt${routes.facebookCallback}`,,
-      profileFields: ['id','displayName', 'photos',"email"],
-      scope:["public_profile","email"]
+      callbackURL: `http://localhost${routes.facebookCallback}`,
+      profileFields: ["id", "displayName", "photos", "email"],
+      scope: ["public_profile", "email"],
     },
     facebookLoginCallback
   )

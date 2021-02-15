@@ -26,6 +26,7 @@ export const githubLoginCallback = async (
     const user = await User.findOne({ email });
     if (user) {
       user.githubId = githubId;
+      user.avatarUrl = avatarUrl;
       await user.save();
       return cb(null, user);
     } else {
@@ -50,17 +51,23 @@ export const facebookLoginCallback = async (
   cb
 ) => {
   const {
-    profileUrl: avatarUrl,
     _json: { id: facebookId, name, email },
   } = profile;
+  const avatarUrl = `https://graph.facebook.com/${facebookId}/picture?type=large`;
   try {
     const user = await User.findOne({ email });
     if (user) {
       user.facebookId = facebookId;
+      user.avatarUrl = avatarUrl;
       await user.save();
       return cb(null, user);
     } else {
-      const newUser = await User.create({ facebookId, avatarUrl, name, email });
+      const newUser = await User.create({
+        facebookId,
+        name,
+        email,
+        avatarUrl,
+      });
       return cb(null, newUser);
     }
   } catch (err) {
