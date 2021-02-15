@@ -31,6 +31,11 @@ const GITHUB_CALLBACK = "/auth/github/callback";
 const FACEBOOK = "/auth/facebook";
 const FACEBOOK_CALLBACK = "/auth/facebook/callback";
 
+// Kakaotalk
+
+const KAKAOTALK = "/auth/kakaotalk";
+const KAKAOTALK_CALLBACK = "/auth/kakaotalk/callback";
+
 const routes = {
   home: HOME,
   join: JOIN,
@@ -63,6 +68,8 @@ const routes = {
   githubCallback: GITHUB_CALLBACK,
   facebook: FACEBOOK,
   facebookCallback: FACEBOOK_CALLBACK,
+  kakaotalk: KAKAOTALK,
+  kakaotalkCallback: KAKAOTALK_CALLBACK,
 };
 
 export default routes;

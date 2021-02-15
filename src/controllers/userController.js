@@ -38,9 +38,7 @@ export const githubLoginCallback = async (
   }
 };
 
-export const postGithubLogin = (req, res) => {
-  res.redirect(routes.home);
-};
+export const postGithubLogin = (req, res) => res.redirect(routes.home);
 
 export const facebookLogin = passport.authenticate("facebook");
 
@@ -75,9 +73,45 @@ export const facebookLoginCallback = async (
   }
 };
 
-export const postFacebookLogin = (req, res) => {
-  res.redirect(routes.home);
+export const postFacebookLogin = (req, res) => res.redirect(routes.home);
+
+export const kakaotalkLogin = passport.authenticate("kakao");
+
+export const kakaotalkLoginCallback = async (
+  _accessToken,
+  _refreshToken,
+  profile,
+  cb
+) => {
+  const {
+    _json: {
+      id: kakaoId,
+      properties: { nickname: name, profile_image: avatarUrl },
+      kakao_account: { email },
+    },
+  } = profile;
+  try {
+    const user = await User.findOne({ email });
+    if (user) {
+      user.kakaoId = kakaoId;
+      user.avatarUrl = avatarUrl;
+      await user.save();
+      return cb(null, user);
+    } else {
+      const newUser = await User.create({
+        kakaoId,
+        name,
+        email,
+        avatarUrl,
+      });
+      return cb(null, newUser);
+    }
+  } catch (err) {
+    return cb(err);
+  }
 };
+
+export const postKakaotalkLogin = (req, res) => res.redirect(routes.home);
 
 export const logout = (req, res) => {
   req.logout();

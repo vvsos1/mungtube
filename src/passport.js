@@ -1,9 +1,11 @@
 import passport from "passport";
 import GithubStrategy from "passport-github";
 import FacebookStrategy from "passport-facebook";
+import KakaoStrategy from "passport-kakao";
 import {
   githubLoginCallback,
   facebookLoginCallback,
+  kakaotalkLoginCallback,
 } from "./controllers/userController";
 import User from "./models/User";
 import routes from "./routes";
@@ -29,6 +31,17 @@ passport.use(
       scope: ["public_profile", "email"],
     },
     facebookLoginCallback
+  )
+);
+
+passport.use(
+  new KakaoStrategy(
+    {
+      clientID: process.env.KAKAOTALK_CLIENT_ID,
+      clientSecret: process.env.KAKAOTALK_CLIENT_SECRET,
+      callbackURL: `http://localhost${routes.kakaotalkCallback}`,
+    },
+    kakaotalkLoginCallback
   )
 );
 

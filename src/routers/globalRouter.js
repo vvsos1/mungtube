@@ -5,11 +5,13 @@ import {
   getJoin,
   getLogin,
   githubLogin,
+  kakaotalkLogin,
   logout,
   myProfile,
   postFacebookLogin,
   postGithubLogin,
   postJoin,
+  postKakaotalkLogin,
   postLogin,
 } from "../controllers/userController";
 import { home, search } from "../controllers/videoController";
@@ -46,6 +48,13 @@ globalRouter.get(
   routes.facebookCallback,
   passport.authenticate("facebook", { failureRedirect: routes.login }),
   postFacebookLogin
+);
+
+globalRouter.get(routes.kakaotalk, kakaotalkLogin);
+globalRouter.get(
+  routes.kakaotalkCallback,
+  passport.authenticate("kakao", { failureRedirect: routes.login }),
+  postKakaotalkLogin
 );
 
 export default globalRouter;
