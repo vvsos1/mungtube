@@ -139,7 +139,7 @@ export const postJoin = async (req, res) => {
   }
 };
 
-export const editProfile = (req, res) => {
+export const getEditProfile = (req, res) => {
   res.render("editProfile", { pageTitle: "Edit Profile" });
 };
 export const editPassword = (req, res) => {
