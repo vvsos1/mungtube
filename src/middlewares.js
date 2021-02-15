@@ -18,6 +18,24 @@ export const onlyPrivate = (req, res, next) => {
   else res.redirect(routes.home);
 };
 
-const multerVideo = multer({ dest: "uploads/videos/" });
+const videoFileFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("video")) cb(null, true);
+  else cb(null, false);
+};
+
+const imageFileFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image")) cb(null, true);
+  else cb(null, false);
+};
+
+const multerVideo = multer({
+  dest: "uploads/videos/",
+  fileFilter: videoFileFilter,
+});
+const multerAvatar = multer({
+  dest: "uploads/avatars/",
+  fileFilter: imageFileFilter,
+});
 
 export const uploadVideo = multerVideo.single("videoFile");
+export const uploadAvatar = multerAvatar.single("avatar");

@@ -142,6 +142,19 @@ export const postJoin = async (req, res) => {
 export const getEditProfile = (req, res) => {
   res.render("editProfile", { pageTitle: "Edit Profile" });
 };
+
+export const postEditProfile = async (req, res) => {
+  const { id } = req.user;
+  const { name, email } = req.body;
+  const avatarUrl = req.file ? req.file.path : req.user.avatarUrl;
+  try {
+    await User.findByIdAndUpdate(id, { name, email, avatarUrl });
+    res.redirect(routes.myProfile);
+  } catch (error) {
+    res.render("editProfile", { pageTitle: "Edit Profile" });
+  }
+};
+
 export const editPassword = (req, res) => {
   res.render("editPassword", { pageTitle: "Edit Password" });
 };
