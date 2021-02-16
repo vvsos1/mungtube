@@ -151,12 +151,26 @@ export const postEditProfile = async (req, res) => {
     await User.findByIdAndUpdate(id, { name, email, avatarUrl });
     res.redirect(routes.myProfile);
   } catch (error) {
-    res.render("editProfile", { pageTitle: "Edit Profile" });
+    res.redirect(routes.users + routes.editProfile);
   }
 };
 
-export const editPassword = (req, res) => {
+export const getEditPassword = (req, res) => {
   res.render("editPassword", { pageTitle: "Edit Password" });
+};
+
+export const postEditPassword = async (req, res) => {
+  const { oldPassword, newPassword, newPassword1 } = req.body;
+  try {
+    if (newPassword !== newPassword1)
+      return res
+        .status(400)
+        .render("editPassword", { pageTitle: "Edit Password" });
+    await req.user.changePassword(oldPassword, newPassword);
+    return res.redirect(routes.myProfile);
+  } catch (error) {
+    return res.redirect(routes.users + routes.editPassword);
+  }
 };
 
 export const myProfile = (req, res) => {

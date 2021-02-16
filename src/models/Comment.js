@@ -9,6 +9,11 @@ const CommentSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  creator: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
 });
 
 export default mongoose.model("Comment", CommentSchema);

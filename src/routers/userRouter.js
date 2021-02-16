@@ -1,7 +1,8 @@
 import express from "express";
 import {
-  editPassword,
+  getEditPassword,
   getEditProfile,
+  postEditPassword,
   postEditProfile,
   userDetail,
 } from "../controllers/userController";
@@ -12,6 +13,7 @@ const userRouter = express.Router();
 
 userRouter.get(routes.editProfile, onlyPrivate, getEditProfile);
 userRouter.post(routes.editProfile, onlyPrivate, uploadAvatar, postEditProfile);
-userRouter.get(routes.editPassword, onlyPrivate, editPassword);
+userRouter.get(routes.editPassword, onlyPrivate, getEditPassword);
+userRouter.post(routes.editPassword, onlyPrivate, postEditPassword);
 userRouter.get(routes.userDetail(), userDetail);
 export default userRouter;

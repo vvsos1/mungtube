@@ -14,8 +14,10 @@ export const search = async (req, res) => {
   const { term: searchingFor } = req.query;
   let videos = [];
   try {
-    videos = await Video.find({title : {$regex:searchingFor,$options:"i"}});
-  } catch(error) {
+    videos = await Video.find({
+      title: { $regex: searchingFor, $options: "i" },
+    });
+  } catch (error) {
     console.log(error);
   }
   res.render("search", { pageTitle: "Search", searchingFor, videos });
@@ -28,14 +30,17 @@ export const getUpload = (req, res) => {
 export const postUpload = async (req, res) => {
   const { title, description } = req.body;
   const { path } = req.file;
+  const { id: creator } = req.user;
 
   const newVideo = await Video.create({
     fileUrl: path,
     title,
     description,
+    creator,
   });
 
-  console.log(newVideo);
+  req.user.videos.push(newVideo.id);
+  await req.user.save();
 
   res.redirect(routes.videoDetail(newVideo.id));
 };
@@ -43,7 +48,7 @@ export const postUpload = async (req, res) => {
 export const videoDetail = async (req, res) => {
   const { id } = req.params;
   try {
-    const video = await Video.findById(id);
+    const video = await Video.findById(id).populate("creator");
     res.render("videoDetail", { pageTitle: video.title, video });
   } catch (erorr) {
     res.redirect(routes.home);
