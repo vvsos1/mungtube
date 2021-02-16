@@ -60,8 +60,11 @@ export const getEditVideo = async (req, res) => {
 
   try {
     const video = await Video.findById(id);
+    if (video.creator.toString() !== req.user.id)
+      throw new Error("Not Allowed");
     res.render("editVideo", { pageTitle: `Edit ${video.title}`, video });
   } catch (error) {
+    console.log(error);
     res.redirect(routes.home);
   }
 };
@@ -70,7 +73,12 @@ export const postEditVideo = async (req, res) => {
   const { id } = req.params;
   const { title, description } = req.body;
   try {
-    await Video.findByIdAndUpdate(id, { title, description });
+    const video = await Video.findById(id);
+    if (video.creator.toString() !== req.user.id)
+      throw new Error("Not Allowed");
+    video.title = title;
+    video.description = description;
+    await video.save();
     res.redirect(routes.videoDetail(id));
   } catch (error) {
     res.redirect(routes.home);
@@ -80,8 +88,12 @@ export const postEditVideo = async (req, res) => {
 export const deleteVideo = async (req, res) => {
   const { id } = req.params;
   try {
-    await Video.findByIdAndDelete(id);
-  } finally {
+    const video = await Video.findById(id);
+    if (video.creator.toString() !== req.user.id)
+      throw new Error("Not Allowed");
+    await video.remove();
+    res.redirect(routes.home);
+  } catch (error) {
     res.redirect(routes.home);
   }
 };
