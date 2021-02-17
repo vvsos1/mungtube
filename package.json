@@ -4,9 +4,8 @@
   "description": "",
   "scripts": {
     "dev:server": "nodemon --exec babel-node src/init.js --delay 2 --ignore '.scss' --ignore 'static' ",
-    "dev:assets": "cross-env WEBPACK_ENV=production webpack -w",
-    "build:assets": "cross-env WEBPACK_ENV=production webpack",
-    "tunnel": "lt --port 80"
+    "dev:assets": "cross-env WEBPACK_ENV=development webpack -w",
+    "build:assets": "cross-env WEBPACK_ENV=production webpack"
   },
   "author": "vvsos1",
   "dependencies": {
