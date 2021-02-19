@@ -22,14 +22,10 @@ async function toggleVideoPlay() {
   } else {
     await videoPlayer.pause();
   }
-  playIcon.classList.toggle("invisible");
-  pauseIcon.classList.toggle("invisible");
 }
 
 function toggleVideoMute() {
   videoPlayer.muted = !videoPlayer.muted;
-  mutedIcon.classList.toggle("invisible");
-  unmutedIcon.classList.toggle("invisible");
 }
 
 function isFullScreen(domElement) {
@@ -68,8 +64,13 @@ function setTotalTime() {
 }
 
 function setCurrentTime() {
-  const currentTimeString = formatDate(videoPlayer.currentTime);
+  const currentTimeString = formatDate(Math.floor(videoPlayer.currentTime));
   currentTime.innerHTML = currentTimeString;
+}
+
+async function handleVideoEnd() {
+  videoPlayer.currentTime = 0;
+  await videoPlayer.pause();
 }
 
 videoContainer?.addEventListener("fullscreenchange", () => {
@@ -80,6 +81,19 @@ playBtn?.addEventListener("click", toggleVideoPlay);
 volumeBtn?.addEventListener("click", toggleVideoMute);
 fullScreenBtn?.addEventListener("click", toggleVideoFullScreen);
 
+videoPlayer?.addEventListener("play", () => {
+  playIcon.classList.add("invisible");
+  pauseIcon.classList.remove("invisible");
+});
+videoPlayer?.addEventListener("pause", () => {
+  playIcon.classList.remove("invisible");
+  pauseIcon.classList.add("invisible");
+});
+videoPlayer?.addEventListener("volumechange", () => {
+  const isMuted = videoPlayer.volume === 0 || videoPlayer.muted;
+  mutedIcon.classList.toggle("invisible", isMuted);
+  unmutedIcon.classList.toggle("invisible", !isMuted);
+});
 videoPlayer?.addEventListener("loadedmetadata", setTotalTime);
 if (videoPlayer?.readyState >= 1) {
   // readyState가 1보다 높으면 메타데이터가 이미 준비된 상태
@@ -87,3 +101,4 @@ if (videoPlayer?.readyState >= 1) {
 }
 
 videoPlayer?.addEventListener("timeupdate", setCurrentTime);
+videoPlayer?.addEventListener("ended", handleVideoEnd);
