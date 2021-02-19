@@ -7,11 +7,14 @@ mixin videoPlayer(video={})
                     i.fas.fa-volume-up.unmuted-icon
                     i.fas.fa-volume-mute.muted-icon.invisible
                 span
-                    |00:00 / 10:00
+                    span#currentTime 00:00:00
+                    span /
+                    span#totalTime 10:00:00
             .videoPlayer__column
                 span#jsPlayButton
                     i.fas.fa-play.play-icon
                     i.fas.fa-pause.pause-icon.invisible
             .videoPlayer__column
-                span
-                    i.fas.fa-expand
+                span#jsFullScreenButton
+                    i.fas.fa-expand.expand-icon
+                    i.fas.fa-compress.compress-icon.invisible
