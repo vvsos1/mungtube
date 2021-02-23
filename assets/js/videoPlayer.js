@@ -16,6 +16,7 @@ const compressIcon = fullScreenBtn?.querySelector(".compress-icon");
 const currentTime = videoContainer?.querySelector("#currentTime");
 const totalTime = videoContainer?.querySelector("#totalTime");
 
+const volumeRange = videoContainer?.querySelector("#jsVolume");
 async function toggleVideoPlay() {
   if (videoPlayer.paused) {
     await videoPlayer.play();
@@ -73,6 +74,10 @@ async function handleVideoEnd() {
   await videoPlayer.pause();
 }
 
+function handleVolumeDrag({ target: { value: volume } }) {
+  videoPlayer.volume = volume;
+}
+
 videoContainer?.addEventListener("fullscreenchange", () => {
   expandIcon.classList.toggle("invisible");
   compressIcon.classList.toggle("invisible");
@@ -90,6 +95,7 @@ videoPlayer?.addEventListener("pause", () => {
   pauseIcon.classList.add("invisible");
 });
 videoPlayer?.addEventListener("volumechange", () => {
+  console.log(videoPlayer.volume);
   const isMuted = videoPlayer.volume === 0 || videoPlayer.muted;
   mutedIcon.classList.toggle("invisible", isMuted);
   unmutedIcon.classList.toggle("invisible", !isMuted);
@@ -102,3 +108,5 @@ if (videoPlayer?.readyState >= 1) {
 
 videoPlayer?.addEventListener("timeupdate", setCurrentTime);
 videoPlayer?.addEventListener("ended", handleVideoEnd);
+
+volumeRange?.addEventListener("input", handleVolumeDrag);

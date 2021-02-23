@@ -27,7 +27,24 @@
       display: flex;
       align-items: center;
       span:first-child {
+        position: relative;
         margin-right: 10px;
+        .videoPlayer__volume {
+          opacity: 0;
+          padding: 0;
+          width: 6rem;
+          position: absolute;
+          left: 45%;
+          bottom: 60%;
+          transform: rotate(270deg);
+          transform-origin: 0;
+        }
+        &:hover,
+        .videoPlayer__volume:hover {
+          .videoPlayer__volume {
+            opacity: 1;
+          }
+        }
       }
     }
     .videoPlayer__column:last-child {
