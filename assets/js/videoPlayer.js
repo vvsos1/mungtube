@@ -17,6 +17,13 @@ const currentTime = videoContainer?.querySelector("#currentTime");
 const totalTime = videoContainer?.querySelector("#totalTime");
 
 const volumeRange = videoContainer?.querySelector("#jsVolume");
+
+function registerView() {
+  const [, videoId] = window.location.href.split("/videos/");
+  fetch(`/api/${videoId}/view`, {
+    method: "POST",
+  });
+}
 async function toggleVideoPlay() {
   if (videoPlayer.paused) {
     await videoPlayer.play();
@@ -60,6 +67,7 @@ const formatDate = (seconds) => {
 };
 
 function setTotalTime() {
+  console.log(videoPlayer.duration);
   const totalTimeString = formatDate(videoPlayer.duration);
   totalTime.innerHTML = totalTimeString;
 }
@@ -70,6 +78,7 @@ function setCurrentTime() {
 }
 
 async function handleVideoEnd() {
+  registerView();
   videoPlayer.currentTime = 0;
   await videoPlayer.pause();
 }
