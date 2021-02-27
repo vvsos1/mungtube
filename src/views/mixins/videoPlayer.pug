@@ -2,7 +2,11 @@ mixin videoPlayer(video={})
   .videoPlayer#jsVideoPlayer
     video(src=`/${video.fileUrl}`, autoplay)
     .videoPlayer__controls
-            .videoPlayer__column
+            .videoPlayer__column.play-column
+                span#jsPlayButton
+                    i.fas.fa-play.play-icon
+                    i.fas.fa-pause.pause-icon.invisible
+            .videoPlayer__column.volume-column
                 span#jsVolumeButton
                     input.videoPlayer__volume#jsVolume(type="range",min="0",max="1",step="0.01")
                     i.fas.fa-volume-up.unmuted-icon
@@ -11,11 +15,9 @@ mixin videoPlayer(video={})
                     span#currentTime 00:00:00
                     span /
                     span#totalTime 10:00:00
-            .videoPlayer__column
-                span#jsPlayButton
-                    i.fas.fa-play.play-icon
-                    i.fas.fa-pause.pause-icon.invisible
-            .videoPlayer__column
+            .videoPlayer__column.progress-column
+                input.videoPlayer__progress#jsProgress(type="range",min="0",max="1000",step="0.01",value="0")
+            .videoPlayer__column.fullscreen-column
                 span#jsFullScreenButton
                     i.fas.fa-expand.expand-icon
                     i.fas.fa-compress.compress-icon.invisible

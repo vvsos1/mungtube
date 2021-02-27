@@ -13,10 +13,12 @@ const fullScreenBtn = videoContainer?.querySelector("#jsFullScreenButton");
 const expandIcon = fullScreenBtn?.querySelector(".expand-icon");
 const compressIcon = fullScreenBtn?.querySelector(".compress-icon");
 
-const currentTime = videoContainer?.querySelector("#currentTime");
-const totalTime = videoContainer?.querySelector("#totalTime");
+const currentTimeText = videoContainer?.querySelector("#currentTime");
+const totalTimeText = videoContainer?.querySelector("#totalTime");
 
 const volumeRange = videoContainer?.querySelector("#jsVolume");
+
+const progressRange = videoContainer?.querySelector("#jsProgress");
 
 function registerView() {
   const [, videoId] = window.location.href.split("/videos/");
@@ -69,12 +71,12 @@ const formatDate = (seconds) => {
 function setTotalTime() {
   console.log(videoPlayer.duration);
   const totalTimeString = formatDate(videoPlayer.duration);
-  totalTime.innerHTML = totalTimeString;
+  totalTimeText.innerHTML = totalTimeString;
 }
 
 function setCurrentTime() {
   const currentTimeString = formatDate(Math.floor(videoPlayer.currentTime));
-  currentTime.innerHTML = currentTimeString;
+  currentTimeText.innerHTML = currentTimeString;
 }
 
 async function handleVideoEnd() {
@@ -85,6 +87,18 @@ async function handleVideoEnd() {
 
 function handleVolumeDrag({ target: { value: volume } }) {
   videoPlayer.volume = volume;
+}
+
+function syncProgressBar({ target: { currentTime, duration: totalTime } }) {
+  const { max } = progressRange;
+  const currentValue = max * (currentTime / totalTime);
+  progressRange.value = currentValue;
+}
+
+function syncVideoPlayer({ target: { value, max } }) {
+  const { duration: totalTime } = videoPlayer;
+  const currentTime = totalTime * (value / max);
+  videoPlayer.currentTime = currentTime;
 }
 
 videoContainer?.addEventListener("fullscreenchange", () => {
@@ -119,3 +133,6 @@ videoPlayer?.addEventListener("timeupdate", setCurrentTime);
 videoPlayer?.addEventListener("ended", handleVideoEnd);
 
 volumeRange?.addEventListener("input", handleVolumeDrag);
+
+videoPlayer?.addEventListener("timeupdate", syncProgressBar);
+progressRange?.addEventListener("input", syncVideoPlayer);
