@@ -4,7 +4,12 @@ block content
     .form-container
         .record-container#jsRecordContainer
             video#jsVideoPreview
-            button#jsRecordBtn Start Recording
+            .radio-wrapper
+                input#videoRadio(type="radio",name="recordType",value="video",checked)
+                label(for="videoRadio") Video Record
+                input#screenRadio(type="radio",name="recordType",value="screen")
+                label(for="screenRadio") Screen Record
+            button#jsRecordBtn Start Video Recording
         form(action=`${routes.videos}${routes.upload}`, method="POST",enctype="multipart/form-data")
             .fileUpload
                 label(for="file") Video File

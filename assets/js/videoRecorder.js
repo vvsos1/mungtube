@@ -4,6 +4,11 @@ const recorderContainer = document.getElementById("jsRecordContainer");
 const recordBtn = document.getElementById("jsRecordBtn");
 const videoPreview = document.getElementById("jsVideoPreview");
 
+const videoRadio = document.getElementById("videoRadio");
+const screenRadio = document.getElementById("screenRadio");
+
+let recordType = "video";
+
 let streamObject;
 let videoRecorder;
 let startTime;
@@ -39,10 +44,16 @@ const startRecording = () => {
 
 async function getVideo() {
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({
-      audio: true,
-      video: { width: 1280, height: 720 },
-    });
+    const stream =
+      recordType === "video"
+        ? await navigator.mediaDevices.getUserMedia({
+            audio: true,
+            video: { width: 1280, height: 720 },
+          })
+        : await navigator.mediaDevices.getDisplayMedia({
+            audio: true,
+            video: { width: 1280, height: 720 },
+          });
     videoPreview.srcObject = stream;
     videoPreview.muted = true;
     await videoPreview.play();
@@ -58,6 +69,12 @@ async function getVideo() {
 
 function init() {
   recordBtn.addEventListener("click", getVideo);
+  videoRadio.addEventListener("change", ({ target: { value } }) => {
+    recordType = value;
+  });
+  screenRadio.addEventListener("change", ({ target: { value } }) => {
+    recordType = value;
+  });
 }
 
 if (recorderContainer) {
