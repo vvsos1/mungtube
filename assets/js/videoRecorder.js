@@ -1,4 +1,4 @@
-import ysFixWebmDuration from "./fix-webm-duration";
+import ysFixWebmDuration from "fix-webm-duration";
 
 const recorderContainer = document.getElementById("jsRecordContainer");
 const recordBtn = document.getElementById("jsRecordBtn");
@@ -37,7 +37,7 @@ const startRecording = () => {
   recordBtn.addEventListener("click", stopRecording);
 };
 
-const getVideo = async () => {
+async function getVideo() {
   try {
     const stream = await navigator.mediaDevices.getUserMedia({
       audio: true,
@@ -54,7 +54,7 @@ const getVideo = async () => {
   } finally {
     recordBtn.removeEventListener("click", getVideo);
   }
-};
+}
 
 function init() {
   recordBtn.addEventListener("click", getVideo);
