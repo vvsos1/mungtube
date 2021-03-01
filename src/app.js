@@ -8,6 +8,7 @@ import passport from "passport";
 import session from "express-session";
 import MongoStore from "connect-mongo";
 import mongoose from "mongoose";
+import flash from "express-flash";
 
 import { localsMiddleware } from "./middlewares";
 import userRouter from "./routers/userRouter";
@@ -45,6 +46,7 @@ app.use(
     store: new CookieStore({ mongooseConnection: mongoose.connection }),
   })
 );
+app.use(flash());
 app.use(morgan("dev"));
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");

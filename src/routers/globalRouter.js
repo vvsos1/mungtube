@@ -8,10 +8,7 @@ import {
   kakaotalkLogin,
   logout,
   myProfile,
-  postFacebookLogin,
-  postGithubLogin,
   postJoin,
-  postKakaotalkLogin,
   postLogin,
 } from "../controllers/userController";
 import { home, search } from "../controllers/videoController";
@@ -38,23 +35,35 @@ globalRouter.get(routes.github, githubLogin);
 
 globalRouter.get(
   routes.githubCallback,
-  passport.authenticate("github", { failureRedirect: routes.login }),
-  postGithubLogin
+  passport.authenticate("github", {
+    failureRedirect: routes.login,
+    successRedirect: routes.home,
+    successFlash: "Welcome",
+    failureFlash: "Can't log in at this time",
+  })
 );
 
 globalRouter.get(routes.facebook, facebookLogin);
 
 globalRouter.get(
   routes.facebookCallback,
-  passport.authenticate("facebook", { failureRedirect: routes.login }),
-  postFacebookLogin
+  passport.authenticate("facebook", {
+    failureRedirect: routes.login,
+    successRedirect: routes.home,
+    successFlash: "Welcome",
+    failureFlash: "Can't log in at this time",
+  })
 );
 
 globalRouter.get(routes.kakaotalk, kakaotalkLogin);
 globalRouter.get(
   routes.kakaotalkCallback,
-  passport.authenticate("kakao", { failureRedirect: routes.login }),
-  postKakaotalkLogin
+  passport.authenticate("kakao", {
+    failureRedirect: routes.login,
+    successRedirect: routes.home,
+    successFlash: "Welcome",
+    failureFlash: "Can't log in at this time",
+  })
 );
 
 export default globalRouter;

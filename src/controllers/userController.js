@@ -8,10 +8,15 @@ export const getLogin = (req, res) => {
 
 export const postLogin = passport.authenticate("local", {
   failureRedirect: routes.login,
+  failureFlash: "Can't log in. Check email and/or password",
   successRedirect: routes.home,
+  successFlash: "Welcome",
 });
 
-export const githubLogin = passport.authenticate("github");
+export const githubLogin = passport.authenticate("github", {
+  successFlash: "Welcome",
+  failureFlash: "Can't log in at this time",
+});
 
 export const githubLoginCallback = async (
   _accessToken,
@@ -40,7 +45,10 @@ export const githubLoginCallback = async (
 
 export const postGithubLogin = (req, res) => res.redirect(routes.home);
 
-export const facebookLogin = passport.authenticate("facebook");
+export const facebookLogin = passport.authenticate("facebook", {
+  successFlash: "Welcome",
+  failureFlash: "Can't log in at this time",
+});
 
 export const facebookLoginCallback = async (
   _accessToken,
@@ -75,7 +83,10 @@ export const facebookLoginCallback = async (
 
 export const postFacebookLogin = (req, res) => res.redirect(routes.home);
 
-export const kakaotalkLogin = passport.authenticate("kakao");
+export const kakaotalkLogin = passport.authenticate("kakao", {
+  successFlash: "Welcome",
+  failureFlash: "Can't log in at this time",
+});
 
 export const kakaotalkLoginCallback = async (
   _accessToken,
@@ -114,6 +125,7 @@ export const kakaotalkLoginCallback = async (
 export const postKakaotalkLogin = (req, res) => res.redirect(routes.home);
 
 export const logout = (req, res) => {
+  req.flash("info", "Logged out, see you later");
   req.logout();
   res.redirect(routes.home);
 };
@@ -124,6 +136,7 @@ export const postJoin = async (req, res) => {
   const { name, email, password, password2 } = req.body;
 
   if (password !== password2) {
+    req.flash("error", "Password don't match");
     res.status(400);
     res.render("join", { pageTitle: "Join" });
   } else {
@@ -188,6 +201,7 @@ export const userDetail = async (req, res) => {
     const user = await User.findById(id).populate("videos");
     res.render("userDetail", { pageTitle: "User Detail", user });
   } catch (error) {
+    req.flash("error", "User not found");
     res.redirect(routes.home);
   }
 };
