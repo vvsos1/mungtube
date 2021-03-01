@@ -136,3 +136,37 @@ volumeRange?.addEventListener("input", handleVolumeDrag);
 
 videoPlayer?.addEventListener("timeupdate", syncProgressBar);
 progressRange?.addEventListener("input", syncVideoPlayer);
+
+videoContainer?.addEventListener("keydown", (e) => {
+  const { key } = e;
+  console.log(e);
+  // preventDefault();
+  switch (key) {
+    case "ArrowLeft":
+    case "a":
+      videoPlayer.currentTime -= 5;
+      break;
+    case "ArrowRight":
+    case "d":
+      videoPlayer.currentTime += 5;
+      break;
+    case "ArrowUp":
+    case "w":
+      videoPlayer.volume += volumeRange.max / 10;
+      break;
+    case "ArrowDown":
+    case "s":
+      videoPlayer.volume -= volumeRange.max / 10;
+      break;
+    default:
+  }
+  if (key === "a") videoPlayer.currentTime -= 5;
+  else if (key === "d") videoPlayer.currentTime += 5;
+  else if (key === " ") {
+    // 스크롤 차단
+    e.preventDefault();
+    e.stopPropagation();
+    toggleVideoPlay();
+  } else if (key === "w") videoPlayer.volume += volumeRange.max / 10;
+  else if (key === "s") videoPlayer.volume -= volumeRange.max / 10;
+});

@@ -1,5 +1,5 @@
 mixin videoPlayer(video={})
-  .videoPlayer#jsVideoPlayer
+  .videoPlayer#jsVideoPlayer(tabindex="-1")
     video(src=`/${video.fileUrl}`, autoplay)
     .videoPlayer__controls
             .videoPlayer__column.play-column
@@ -8,7 +8,7 @@ mixin videoPlayer(video={})
                     i.fas.fa-pause.pause-icon.invisible
             .videoPlayer__column.volume-column
                 span#jsVolumeButton
-                    input.videoPlayer__volume#jsVolume(type="range",min="0",max="1",step="0.01")
+                    input.videoPlayer__volume#jsVolume(type="range",min="0",max="1",step="0.01",value="0.5")
                     i.fas.fa-volume-up.unmuted-icon
                     i.fas.fa-volume-mute.muted-icon.invisible
                 span
