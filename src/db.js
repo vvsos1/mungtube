@@ -2,8 +2,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 
 dotenv.config();
-
-const { MONGO_URL } = process.env;
+const { MONGO_URL_PRODUCTION: MONGO_URL } = process.env;
 
 mongoose.connect(MONGO_URL, {
   useUnifiedTopology: true,
