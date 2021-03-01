@@ -1,6 +1,6 @@
 mixin videoPlayer(video={})
   .videoPlayer#jsVideoPlayer(tabindex="-1")
-    video(src=`/${video.fileUrl}`, autoplay)
+    video(src=video.fileUrl, autoplay)
     .videoPlayer__controls
             .videoPlayer__column.play-column
                 span#jsPlayButton

@@ -146,7 +146,7 @@ export const getEditProfile = (req, res) => {
 export const postEditProfile = async (req, res) => {
   const { id } = req.user;
   const { name, email } = req.body;
-  const avatarUrl = req.file ? req.file.path : req.user.avatarUrl;
+  const avatarUrl = req.file?.location || req.user.avatarUrl;
   try {
     await User.findByIdAndUpdate(id, { name, email, avatarUrl });
     res.redirect(routes.myProfile);
@@ -173,8 +173,13 @@ export const postEditPassword = async (req, res) => {
   }
 };
 
-export const myProfile = (req, res) => {
-  res.render("userDetail", { pageTitle: "User Detail", user: req.user });
+export const myProfile = async (req, res) => {
+  try {
+    await User.populate(req.user, "videos");
+    res.render("userDetail", { pageTitle: "User Detail", user: req.user });
+  } catch (error) {
+    res.redirect(routes.home);
+  }
 };
 
 export const userDetail = async (req, res) => {

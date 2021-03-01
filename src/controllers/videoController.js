@@ -30,11 +30,11 @@ export const getUpload = (req, res) => {
 
 export const postUpload = async (req, res) => {
   const { title, description } = req.body;
-  const { path } = req.file;
+  const { location } = req.file;
   const { id: creator } = req.user;
 
   const newVideo = await Video.create({
-    fileUrl: path,
+    fileUrl: location,
     title,
     description,
     creator,
@@ -94,6 +94,8 @@ export const deleteVideo = async (req, res) => {
     const video = await Video.findById(id);
     if (video.creator.toString() !== req.user.id)
       throw new Error("Not Allowed");
+    req.user.videos.splice(req.user.videos.indexOf(video.id), 1);
+    await req.user.save();
     await video.remove();
     res.redirect(routes.home);
   } catch (error) {
